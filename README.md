@@ -29,7 +29,5 @@ When the button is clicked again and the feature turned off the audio player is 
 
 TODO:
 * Add Listeners for
-  * Play - start the audio player playing
-  * Pause - pause the audio player
   * Seek - change the audio player time to match
 * if descriptions captions are available switch then when the button is pressed.
