@@ -28,6 +28,4 @@ While playing a video when the button is clicked and the feature is turned on th
 When the button is clicked again and the feature turned off the audio player is set to volume 0 and the video player is set to the previous volume.
 
 TODO:
-* Add Listeners for
-  * Seek - change the audio player time to match
 * if descriptions captions are available switch then when the button is pressed.
