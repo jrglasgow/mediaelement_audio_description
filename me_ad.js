@@ -102,6 +102,13 @@
         adPlayer.pause();
       });
 
+      // add seeked event listener
+      player.media.addEventListener('seeked', function() {
+        player = meGetPlayer(this);
+        adPlayer = meGetADPlayer(this);
+        meADSync(player, adPlayer);
+      });
+
     }
   };
 
