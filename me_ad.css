@@ -1,0 +1,11 @@
+/* style the AD button in the player */
+.mejs-controls .mejs-ad-button button {
+  background: url(ad.png) left top  no-repeat;
+}
+.mejs-controls .mejs-ad-button.mejs-ad-on button {
+  background-position-x: -16px;
+}
+/* the mediaelement audio player needs hidden */
+.mejs-container .mejs-mediaelement .mejs-audio {
+  display: none;
+}
