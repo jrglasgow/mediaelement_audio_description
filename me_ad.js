@@ -58,7 +58,7 @@
               // ensure the ad player is synced
               // ensure the ad player volume is up so it can be heard
               adPlayer.play();
-              adPlayer.setCurrentTime(player.media.currentTime);
+              meADSync(player, adPlayer);
               // the default bvehavior is to expect the AD audio file to contain
               // all audio so the video player is muted
               if (!player.options.adSimultaneous) {
@@ -78,7 +78,54 @@
               player.setVolume(player.prevVolume);
             }
           });
+
+      // add play event listener
+      player.media.addEventListener('play', function() {
+        player = meGetPlayer(this);
+        adPlayer = meGetADPlayer(this);
+
+        adPlayer.play();
+        meADSync(player, adPlayer);
+        if (player.options.audioDescriptions) {
+          adPlayer.setVolume(player.volume);
+        }
+        else {
+          adPlayer.setVolume(0);
+        }
+      });
+
+      // add pause event listener
+      player.media.addEventListener('pause', function() {
+        player = meGetPlayer(this);
+        adPlayer = meGetADPlayer(this);
+        meADSync(player, adPlayer);
+        adPlayer.pause();
+      });
+
     }
   };
+
+  /**
+   * Sync the time of the video player and the audio player
+   */
+  function meADSync(player, adPlayer) {
+    adPlayer.setCurrentTime(player.media.currentTime);
+  }
+
+  /**
+   * get the video player object
+   */
+  function meGetPlayer(video) {
+    var playerID = $(video).parents('.mejs-container').attr('id').split('mep_')[1];
+    return mejs.players[playerID];
+  }
+
+  /**
+   * get the Audio Description player object
+   */
+  function meGetADPlayer(video) {
+    var adPlayerID = $(video).siblings('.mejs-audio').attr('id').split('mep_')[1];
+    return mejs.players[adPlayerID];
+  }
 
 })(jQuery);
