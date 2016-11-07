@@ -56,7 +56,8 @@
               adPlayerID = 'mep_' + adPlayerID;
             }
             
-            var adPlayer = mejs.players[adPlayerID];
+            var adPlayer = mejs.players[adPlayerID],
+                currentLanguage = '';
             if (player.options.audioDescriptions) {
               // audio descriptions is on
               audioDescription.removeClass('mejs-ad-off').addClass('mejs-ad-on');
@@ -72,6 +73,19 @@
                 adPlayer.setVolume(player.prevVolume);
                 player.setVolume(0);
               }
+
+              if (player.selectedTrack) {
+                // captions are currently turned on, switch to AD captions if available
+                currentLanguage = player.selectedTrack.srclang;
+                // check to see if there is a text track with the same language
+                // but with audio descriptions
+                for (var i in player.tracks) {
+                  if (player.tracks[i].hasOwnProperty && player.tracks[i].srclang == currentLanguage + '-ad') {
+                    player.loadTrack(i);
+                    player.selectedTrack = player.tracks[i];
+                  }
+                }
+              }
             }
             else {
               // audio descriptions is off
@@ -82,6 +96,19 @@
               adPlayer.setVolume(0);
               // turn the video player volume back up
               player.setVolume(player.prevVolume);
+
+              if (player.selectedTrack) {
+                // captions are currently turned on, switch to AD captions if available
+                currentLanguage = player.selectedTrack.srclang.split('-')[0];
+                // check to see if there is a text track with the same language
+                // but with audio descriptions
+                for (var j in player.tracks) {
+                  if (player.tracks[j].hasOwnProperty && player.tracks[j].srclang == currentLanguage) {
+                    player.loadTrack(j);
+                    player.selectedTrack = player.tracks[j];
+                  }
+                }
+              }
             }
           });
 
@@ -114,7 +141,6 @@
         adPlayer = meGetADPlayer(this);
         meADSync(player, adPlayer);
       });
-
     }
   };
 
