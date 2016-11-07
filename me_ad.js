@@ -33,6 +33,9 @@
       $(audio).append(source);
       $(audio).attr('id', player.id + '-audio_description');
       $('#' + player.id + ' .mejs-mediaelement').append(audio);
+      $('#' + player.id + '-audio_description').mediaelementplayer({
+        pauseOtherPlayers: false,
+      });
       
       var
         // create the Audio Descriptions button
@@ -49,6 +52,9 @@
             player.options.audioDescriptions = !player.options.audioDescriptions;
             // get the id of the audio description player so we can make changes
             adPlayerID = $('#' + player.id + ' .mejs-mediaelement .mejs-audio').attr('id').split('_')[1];
+            if (typeof mejs.players[adPlayerID] === 'undefined') {
+              adPlayerID = 'mep_' + adPlayerID;
+            }
             
             var adPlayer = mejs.players[adPlayerID];
             if (player.options.audioDescriptions) {
@@ -124,7 +130,14 @@
    */
   function meGetPlayer(video) {
     var playerID = $(video).parents('.mejs-container').attr('id').split('mep_')[1];
-    return mejs.players[playerID];
+    if (typeof mejs.players[playerID] !== 'undefined') {
+      return mejs.players[playerID];
+    }
+    else {
+      playerID = 'mep_' + playerID;
+      player = mejs.players[playerID];
+      return player;
+    }
   }
 
   /**
@@ -132,7 +145,14 @@
    */
   function meGetADPlayer(video) {
     var adPlayerID = $(video).siblings('.mejs-audio').attr('id').split('mep_')[1];
-    return mejs.players[adPlayerID];
+    if (typeof mejs.players[adPlayerID] !== 'undefined') {
+      return mejs.players[adPlayerID];
+    }
+    else {
+      adPlayerID = 'mep_' + adPlayerID;
+      player = mejs.players[adPlayerID];
+      return player;
+    }
   }
 
 })(jQuery);
