@@ -1,4 +1,5 @@
 Adds Audio Descriptions to the MediaElement.js player
+This is my work for [issue #1891|https://github.com/johndyer/mediaelement/issues/1891] which is support for the audioTracks HTML5 element.
 
 Add an audioTrack element to your video element. Kind must be description.
 ~~~~
