@@ -18,8 +18,8 @@ jQuery(document).ready(function($) {
     // create player
     $('#player1').mediaelementplayer({
         // add desired features in order
-        // I've put the loop function second,
-        features: ['playpause','audioDescription','current','progress','duration','volume','fullscreen'],
+        // I've put the audioDescription function second,
+        features: ['playpause','audioDescription', 'captions','current','progress','duration','volume','fullscreen'],
     });
 
 });
