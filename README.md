@@ -34,4 +34,5 @@ If there is a captions file with audio descriptions you can set the srclang as t
 
 TODO:
 * handle caption button being pressed after Audio Descriptions are activated
+* Support Additive description tracks instead of just replacement audio tracks
 * as this was developed with MediaElement.js 2.9.5 ensure all features work with the latest version
