@@ -30,7 +30,7 @@ While playing a video when the button is clicked and the feature is turned on th
 
 When the button is clicked again and the feature turned off the audio player is set to volume 0 and the video player is set to the previous volume.
 
-If there is a captions file with audio descriptions you can set the srclang as the above example with the language code hyphen "ad" i.e. "lc-ad" and the captions will switch to using the descriptive captions. For instance in the above code example; if the user selected the English captions and turned on Audio Descriptions the captions track would immediately switch to the "English - Audio Described" version of the captions. If Audio Descriptions are turned off the captions track switches back. If there is no matching AD track nothing is done.
+If there is a captions file with audio descriptions you can set the srclang as the above example with the language code hyphen "ad" i.e. "en-ad" (for English) and the captions will switch to using the descriptive captions. For instance, in the above code example; if the user selected the English captions and turned on Audio Descriptions the captions track would immediately switch to the "English - Audio Described" version of the captions. If Audio Descriptions are turned off the captions track switches back. If there is no matching AD track nothing is done.
 
 TODO:
 * handle caption button being pressed after Audio Descriptions are activated
