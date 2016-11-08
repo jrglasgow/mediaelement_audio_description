@@ -35,5 +35,4 @@ When the button is clicked again and the feature turned off the audio player is 
 If there is a captions file with audio descriptions you can set the srclang as the above example with the language code hyphen "ad" i.e. "en-ad" (for English) and the captions will switch to using the descriptive captions. For instance, in the above code example; if the user selected the English captions and turned on Audio Descriptions the captions track would immediately switch to the "English - Audio Described" version of the captions. If Audio Descriptions are turned off the captions track switches back. If there is no matching AD track nothing is done.
 
 TODO:
-* handle caption button being pressed after Audio Descriptions are activated
 * as this was developed with MediaElement.js 2.9.5 ensure all features work with the latest version

@@ -18,6 +18,36 @@
     }
 
     if (descriptionTrackSrc) {
+
+      /**
+       * switch to the AD captions
+       */
+      player.displayADCaptions = function() {
+        var player = this;
+        if (player.selectedTrack) {
+          // captions are currently turned on, switch to AD captions if available
+          currentLanguage = player.selectedTrack.srclang;
+          // check to see if there is a text track with the same language
+          // but with audio descriptions
+          for (var i in player.tracks) {
+            if (player.tracks[i].hasOwnProperty && player.tracks[i].srclang == currentLanguage + '-ad') {
+              player.loadTrack(i);
+              player.selectedTrack = player.tracks[i];
+            }
+          }
+        }
+      };
+
+      // override the normal player.displayCaptions function as there is no
+      // trigger we cannot add a listener
+      player.displayCaptionsOriginal = player.displayCaptions;
+      player.displayCaptions = function() {
+        player.displayCaptionsOriginal();
+        if (player.options.audioDescriptions) {
+          player.displayADCaptions();
+        }
+      };
+
       // create the audio element to append to the .mejs-mediaelement div which
       // contains the video
       var audio = document.createElement('audio');
@@ -65,7 +95,10 @@
               $('.mejs-ad-button span.mejs-button').text('Stop Audio Descriptions');
               // ensure the ad player is synced
               // ensure the ad player volume is up so it can be heard
-              adPlayer.play();
+              if (!player.media.paused) {
+                // only start playing if the video is playing
+                adPlayer.play();
+              }
               meADSync(player, adPlayer);
               // the default behavior is to expect the AD audio file to contain
               // all audio so the video player is muted
@@ -79,18 +112,7 @@
                 adPlayer.setVolume(player.prevVolume);
               }
 
-              if (player.selectedTrack) {
-                // captions are currently turned on, switch to AD captions if available
-                currentLanguage = player.selectedTrack.srclang;
-                // check to see if there is a text track with the same language
-                // but with audio descriptions
-                for (var i in player.tracks) {
-                  if (player.tracks[i].hasOwnProperty && player.tracks[i].srclang == currentLanguage + '-ad') {
-                    player.loadTrack(i);
-                    player.selectedTrack = player.tracks[i];
-                  }
-                }
-              }
+              player.displayADCaptions();
             }
             else {
               // audio descriptions is off
