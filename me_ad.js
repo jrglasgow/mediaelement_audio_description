@@ -12,6 +12,7 @@
         audioTrack = player.media.childNodes[i];
         if ($(audioTrack).attr('kind') === 'description' ) {
           descriptionTrackSrc = $(audioTrack).attr('src');
+          player.options.audioDescriptionType = $(audioTrack).attr('type');
         }
       }
     }
@@ -66,12 +67,16 @@
               // ensure the ad player volume is up so it can be heard
               adPlayer.play();
               meADSync(player, adPlayer);
-              // the default bvehavior is to expect the AD audio file to contain
+              // the default behavior is to expect the AD audio file to contain
               // all audio so the video player is muted
-              if (!player.options.adSimultaneous) {
-                player.prevVolume = player.getVolume();
+              player.prevVolume = player.getVolume();
+              if (player.options.audioDescriptionType !== 'additive') {
                 adPlayer.setVolume(player.prevVolume);
                 player.setVolume(0);
+              }
+              else {
+                // set the audio player to the same volume as the video player
+                adPlayer.setVolume(player.prevVolume);
               }
 
               if (player.selectedTrack) {
